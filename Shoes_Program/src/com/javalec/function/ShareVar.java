@@ -28,7 +28,7 @@ public class ShareVar {
 	
 	
 	
-	public static String userID = "wondh1216"; // 아무거나 넣었음
+	public static String userID = ""; // 아무거나 넣었음
 	/// Window setting
 	public static int position_window_x = 600;
 	public static int position_window_y = 250;

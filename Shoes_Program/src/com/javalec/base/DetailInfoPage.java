@@ -140,9 +140,10 @@ public class DetailInfoPage extends JDialog {
 
 	private JLabel getLblId() {
 		if (lblId == null) {
-			lblId = new JLabel("wondh1216");
+			lblId = new JLabel("");
 			lblId.setHorizontalAlignment(SwingConstants.TRAILING);
 			lblId.setBounds(457, 10, 191, 30);
+			lblId.setText(ShareVar.userID);
 		}
 		return lblId;
 	}

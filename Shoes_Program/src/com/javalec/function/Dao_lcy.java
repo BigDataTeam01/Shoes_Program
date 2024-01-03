@@ -192,7 +192,7 @@ public class Dao_lcy {
 			
 			ps = conn_mysql.prepareStatement(A+B);
 			ps.setInt(1,p_seq);
-			ps.setString(2, "qpdlql512");
+			ps.setString(2, ShareVar.userID);
 			ps.setInt(3, price);
 			ps.setInt(4, qty);
 			ps.executeUpdate();
@@ -268,7 +268,7 @@ public class Dao_lcy {
 			ArrayList<Dto_lcy> Dto_lcyList = new ArrayList<Dto_lcy>();
 			String whereDefault = "select p.p_seq, p.brand, p.name, p.price, p.color, p.size, sale.qty, sale.date";
 			String where1 = " from product as p, sale";
-			String where2 = " where (p.p_seq = sale.product_p_seq) and customer_customer_id = " + ShareVar.userID;
+			String where2 = " where (p.p_seq = product_p_seq) and customer_customer_id = '" + ShareVar.userID + "'";
 //			===================================================================================[ShareVar.userId]================================
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");

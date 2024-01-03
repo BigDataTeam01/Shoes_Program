@@ -28,6 +28,7 @@ import javax.swing.table.TableColumn;
 
 import com.javalec.function.Dao_MainView;
 import com.javalec.function.Dto_Mainview;
+import com.javalec.function.ShareVar;
 import com.javalec.product.MainView_Info;
 
 public class MainView extends JDialog {
@@ -84,7 +85,7 @@ public class MainView extends JDialog {
 
 			}
 		});
-		setBounds(100, 100, 800, 600);
+		setBounds(ShareVar.position_window_x, ShareVar.position_window_y, 800, 600);;
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -260,35 +261,20 @@ public class MainView extends JDialog {
 
 	}
 
-	// TABLE클릭했을때 물품의 SEQ확인
 	private void tableClick() {
 		Dao_MainView dao_MainView = new Dao_MainView();
-
 		dao_MainView.p_seqArrayList(); // p_seq가 들어있는 ArrayList 가져옴
-
-		int selectedRow = InnerTable.getSelectedRow(); // InnerTable을 클릭했을 때 몇 번째 row 인지 가져옴
-
-		// 가져온 p_seq를 clickSeq 변수에 저장
-		MainView_Info.clickSeq = dao_MainView.p_seqArrayList().get(selectedRow);
-
-		// DetailInfoPage 객체 생성 및 해당 페이지 보이기
-		goToDetailInfo();
-	}
-
-	public class DetailInfoPage extends JFrame {
-		private int clickSeq; // clickSeq 변수 추가
-
-		// 생성자 추가
-		public DetailInfoPage(int clickSeq) {
-			this.clickSeq = clickSeq;
-			// clickSeq를 사용하여 원하는 작업을 수행 가능
-		}
-		// ...
+		
+		InnerTable.getSelectedRow();	// InnerTable을 클릭했을 때 몇번째 row 인지 가져옴
+		
+		MainView_Info.clickSeq = dao_MainView.p_seqArrayList().get(InnerTable.getSelectedRow());
+		
+		// MainView_Info.clickSeq를 p_seq가 들어있는 ArrayList에서 InnerTable을 클릭했을 때 몇번째 row인지 비교 후 클릭된 p_seq값만 가져옴
 	}
 
 	private void goToDetailInfo() {
 		// MainView 클래스에서 DetailInfoPage 객체를 생성하고 보여주기
-		DetailInfoPage detailInfoPage = new DetailInfoPage(MainView_Info.clickSeq);
+		DetailInfoPage detailInfoPage = new DetailInfoPage();
 		detailInfoPage.setVisible(true);
 		// this.setVisible(false);
 	}

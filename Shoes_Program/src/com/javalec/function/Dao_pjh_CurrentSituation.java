@@ -107,17 +107,26 @@ public class Dao_pjh_CurrentSituation {
 	// 일주일 매출 Qurry
 	public ArrayList<Dto_pjh_CurrentSituation> selectWeekList() {
 		ArrayList<Dto_pjh_CurrentSituation> dtolist = new ArrayList<Dto_pjh_CurrentSituation>();
-		String whereDefault = "SELECT CONCAT(\r\n"
-				//날짜를 년,월,일 포멧으로 변환
-				+ " DATE_FORMAT(MIN(date), '%Y-%m-%d'), \r\n"
-				+ " ' ~ ', \r\n"
-				//데이트 포멧에서 max로최대날짜( DAYOFWEEK로 요일을 숫자로 반환한다. 그 숫자로 각 주의 일요일 날짜를 가져옴)
-				+ " DATE_FORMAT MAX(DATE_ADD(date, INTERVAL 6-DAYOFWEEK(date) DAY)), '%Y-%m-%d')\r\n"
-				+ " ) AS week_range,\r\n"
-				+ " SUM(price * qty) AS weekly_sales\r\n"
-				+ "FROM sale \r\n"
-				//연도랑 주차로 그룹핑하기
+		String whereDefault = "SELECT CONCAT(\n"
+				+ "        DATE_FORMAT(MIN(date), '%Y-%m-%d'),\n"
+				+ "        ' ~ ',\n"
+				+ "        DATE_FORMAT(MAX(DATE_ADD(date, INTERVAL 6-DAYOFWEEK(date) DAY)), '%Y-%m-%d')\n"
+				+ "       ) AS week_range,\n"
+				+ "       SUM(price * qty) AS weekly_sales\n"
+				+ "FROM sale\n"
 				+ "GROUP BY YEAR(date), WEEK(date)";
+				
+//				"SELECT CONCAT(\r\n"
+//				//날짜를 년,월,일 포멧으로 변환
+//				+ " DATE_FORMAT(MIN(date), '%Y-%m-%d'), \r\n"
+//				+ " ' ~ ', \r\n"
+//				//데이트 포멧에서 max로최대날짜( DAYOFWEEK로 요일을 숫자로 반환한다. 그 숫자로 각 주의 일요일 날짜를 가져옴)
+//				+ " DATE_FORMAT MAX(DATE_ADD(date, INTERVAL 6-DAYOFWEEK(date) DAY)), '%Y-%m-%d')\r\n"
+//				+ " ) AS week_range,\r\n"
+//				+ " SUM(price * qty) AS weekly_sales\r\n"
+//				+ "FROM sale \r\n"
+//				//연도랑 주차로 그룹핑하기
+//				+ "GROUP BY YEAR(date), WEEK(date)";
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
